@@ -2,9 +2,14 @@ let nodes = [];
 let connectors = [];
 let selectedNode = null;
 let isDragging = false;
+let isSearching = false;
 let isDrawingConnector = false;
 let startConnector = null;
 let nodeConnection = [];
+let isClicked = false;
+let currentNode;
+let secondNode = null;
+let lineNodes = [];
 
 function createNode(x, y) {
     const node = document.createElement('div');
@@ -14,6 +19,7 @@ function createNode(x, y) {
     node.style.top = y + 'px';
     node.innerHTML = 'Node';
     node.nodeConnection = null;
+    node.clickState = null;
     document.getElementById('diagram-container').appendChild(node);
 
     // Adicione conectores à esquerda e à direita do nó
@@ -25,9 +31,28 @@ function createNode(x, y) {
         isDragging = true;
     });
 
+    // work heeeere
+    $(node).dblclick(function(){
+        if(node.clickState == true){
+            node.clickState = false;
+        }else{
+            lineNodes.push(node);
+            node.clickState = true;
+            console.log(lineNodes);
+        }
+    });
+
     node.addEventListener('click', (e) =>{
         if(isDragging == false){
-            console.log('test');
+            if(!isClicked){
+                isClicked = true;
+                currentNode = node
+            }else if(currentNode !== node){
+                currentNode.nodeConnection = new LeaderLine(currentNode, node, {color: 'red', size: 3})
+                node.nodeConnection = currentNode.nodeConnection;
+                console.log('test');
+                isClicked = false;
+            }
         }
     });
 
@@ -41,7 +66,7 @@ document.getElementById('add-node').addEventListener('click', () => {
     const node = createNode(x, y);
 
     // node.appendChild()
-    node.nodeConnection = new LeaderLine(document.getElementById('element-1'), node, {color: 'red', size: 3})
+    // node.nodeConnection = new LeaderLine(document.getElementById('element-1'), node, {color: 'red', size: 3})
     
     console.log(node);
     nodes.push(node);
@@ -59,16 +84,6 @@ document.addEventListener('mouseup', () => {
     isDragging = false;
 });
 
-createNode(200, 200);
-
 var startElement = document.getElementById('element-1');
-//   endElement = document.getElementById('element-2');
-
-// New leader line has red color and size 8.
-// new LeaderLine(startElement, endElement, {color: 'red', size: 8});
-
-
-line1 = new LeaderLine(startElement, document.getElementById('node0'), {color: 'red', size: 3});
-console.log(line1.position());
 
 
