@@ -4,15 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diagrama com Conexões</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <!-- Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/leader-line-master/leader-line.min.js"></script>
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="diagram-container">
-        <!-- Área de desenho do diagrama -->
+        <div id="element-1" style="width: 100px; height: 100px; top:0; left:0; background:#e53935 ; position:absolute;"></div>
+        <div id="element-2" style="width: 100px; height: 100px; top:200px; left:300px; background:#4527a0 ; position:absolute;"></div>
+
     </div>
     <button id="add-node">Adicionar Nó</button>
     <script src="script.js"></script>
+
+
 </body>
 </html>
     
