@@ -22,4 +22,11 @@
     background-color: red;
     border-radius: 50%;
     position: absolute;
+    cursor: pointer;
+}
+
+.line {
+    position: absolute;
+    background-color: red;
+    width: 2px;
 }
