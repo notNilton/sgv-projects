@@ -25,6 +25,11 @@ function createNode(x, y) {
     return node;
 }
 
+// document.getElementsByClassName('node').addEventListener('mousedown', (e) =>{
+//     selectedNode = node;
+//     isDragging = true;
+// });
+
 function createConnector(left, top, node) {
     const connector = document.createElement('div');
     connector.className = 'connector';
@@ -32,12 +37,6 @@ function createConnector(left, top, node) {
     connector.style.top = top;
     node.appendChild(connector);
     return connector;
-}
-
-function connectNodes(startNode, endNode) {
-    if (startNode !== endNode) {
-        drawConnector(startNode, endNode);
-    }
 }
 
 document.getElementById('add-node').addEventListener('click', () => {
@@ -55,44 +54,14 @@ document.getElementById('add-node').addEventListener('click', () => {
     }
 });
 
-document.addEventListener('mousedown', (e) => {
-    if (e.target.classList.contains('left-connector') || e.target.classList.contains('right-connector')) {
-        if (!isDrawingConnector) {
-            isDrawingConnector = true;
-            startConnector = e.target;
-        } else {
-            if (startConnector && startConnector !== e.target) {
-                connectNodes(startConnector.parentNode, e.target.parentNode);
-                isDrawingConnector = false;
-                startConnector = null;
-            }
-        }
-    }
-});
-
 document.addEventListener('mousemove', (e) => {
     if (isDragging) {
         selectedNode.style.left = e.clientX - selectedNode.offsetWidth / 2 + 'px';
         selectedNode.style.top = e.clientY - selectedNode.offsetHeight / 2 + 'px';
-        connectors.forEach(connector => {
-            document.getElementById('diagram-container').removeChild(connector);
-        });
-        connectors = [];
-        nodes.forEach(node => {
-            if (node !== selectedNode) {
-                const startRect = selectedNode.getBoundingClientRect();
-                const endRect = node.getBoundingClientRect();
-                if (startRect.right > endRect.left && startRect.left < endRect.right &&
-                    startRect.bottom < endRect.top && startRect.bottom + 10 > endRect.top) {
-                    connectNodes(selectedNode, node);
-                }
-            }
-        });
+        // path start and ending on svg
     }
 });
 
 document.addEventListener('mouseup', () => {
     isDragging = false;
-    isDrawingConnector = false;
-    startConnector = null;
 });
