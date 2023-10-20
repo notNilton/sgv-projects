@@ -7,9 +7,7 @@ let isDrawingConnector = false;
 let startConnector = null;
 let nodeConnection = [];
 let isClicked = false;
-let currentNode;
 let secondNode = null;
-let lineNodes = [];
 
 function createNode(x, y) {
     const node = document.createElement('div');
@@ -18,7 +16,7 @@ function createNode(x, y) {
     node.style.left = x + 'px';
     node.style.top = y + 'px';
     node.innerHTML = 'Node';
-    node.nodeConnection = null;
+    node.nodeChildren = [];
     node.clickState = null;
     document.getElementById('diagram-container').appendChild(node);
 
@@ -35,8 +33,8 @@ function createNode(x, y) {
     $(node).dblclick(function(){
         if(node.clickState == true){
             node.clickState = false;
-        }else{
-            lineNodes.push(node);
+        }else if(isClicked == true){
+            // node.inpConnection = 
             node.clickState = true;
             console.log(lineNodes);
         }
@@ -48,9 +46,10 @@ function createNode(x, y) {
                 isClicked = true;
                 currentNode = node
             }else if(currentNode !== node){
-                currentNode.nodeConnection = new LeaderLine(currentNode, node, {color: 'red', size: 3})
-                node.nodeConnection = currentNode.nodeConnection;
-                console.log('test');
+                currentNode.nodeChildren.push(node);
+                
+                new LeaderLine(currentNode, node, {color: 'red', size: 3})
+                console.log(currentNode.nodeChildren);
                 isClicked = false;
             }
         }
