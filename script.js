@@ -1,3 +1,9 @@
+// Create Two Elements
+
+// Link them
+
+
+
 let nodes = [];
 let connectors = [];
 let selectedNode = null;
